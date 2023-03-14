@@ -89,7 +89,7 @@ git clone https://github.com/yyvhang/IAGNet.git
 
 
 ### Train <a name="61"></a> 
-To train the IAG-Net model, just run the following command
+To train the IAG-Net model, you can modify the training parameter in `config/config_seen.yaml` and then run the following command:
 ```bash  
 python train.py --name IAG
 ```
