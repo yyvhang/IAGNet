@@ -41,7 +41,7 @@ Grounding 3D object affordance seeks to locate objects' ''action possibilities''
     </em>
 </p>
 
-**Our Interaction-driven 3D Affordance Grounding Network.** it firstly extracts localized features $\mathbf{F}_{i}, \mathbf{F}_{p}$ respectively, then takes the Joint Region Alignment Module to align them and get the joint feature $\mathbf{F}_{j}$. Next, Affordance Revealed Module utilizes $\mathbf{F}_{j}$ to reveal affordance $\mathbf{F}_{\alpha}$ with $\mathbf{F}_{s}, \mathbf{F}_{e}$ by cross-attention. Eventually, $\mathbf{F}_{j}$ and $\mathbf{F}_{\alpha}$ are sent to the decoder to obtain the final results $\hat{\phi}$ and $\hat{y}$.}
+**Our Interaction-driven 3D Affordance Grounding Network.** it firstly extracts localized features $F_{i}$, $F_{p}$ respectively, then takes the Joint Region Alignment Module to align them and get the joint feature $F_{j}$. Next, Affordance Revealed Module utilizes $F_{j}$ to reveal affordance $F_{\alpha}$ with $F_{s}$, $F_{e}$ by cross-attention. Eventually, $F_{j}$ and $F_{\alpha}$ are sent to the decoder to obtain the final results $\hat{\phi}$ and $\hat{y}$.
 
 ## 📂 Dataset <a name="4"></a> 
 <p align="center">
