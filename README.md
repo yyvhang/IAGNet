@@ -4,23 +4,46 @@ PyTorch implementation of Grounding 3D Object Affordance from 2D Interactios in 
 
 ## 📋 Table of content
  1. [📎 Paper Link](#1)
- 2. [💡 Abstract](#2)
- 3. [📖 Method](#3)
- 4. [📂 Dataset](#4)
- 5. [📃 Requirements](#5)
- 6. [✏️ Usage](#6)
+ 2. [❗ Quick Understanding](#1_)
+ 3. [💡 Abstract](#2)
+ 4. [📖 Method](#3)
+ 5. [📂 Dataset](#4)
+ 6. [📃 Requirements](#5)
+ 7. [✏️ Usage](#6)
     1. [Train](#61)
     2. [Evaluate](#62)
     3. [Inference](#63)
- 7. [📊 Experimental Results](#7)
- 8. [🍎 Potential Applications](#8)
- 9. [✉️ Statement](#9)
- 10. [🔍 Citation](#10)
+ 8. [📊 Experimental Results](#7)
+ 9. [🍎 Potential Applications](#8)
+ 10. [✉️ Statement](#9)
+ 11. [🔍 Citation](#10)
 
 ## 📎 Paper Link <a name="1"></a> 
 * Grounding 3D Object Affordance from 2D Interactions in Images ([link](https://arxiv.org/abs/2106.14747))
 > Authors:
-> Yuhang Yang, Wei Zhai, Hongchen Luo, Yang Cao, Jiebo Luo, Zhengjun Zha
+> Yuhang Yang, Wei Zhai, Hongchen Luo, Yang Cao, Jiebo Luo, Zheng-Jun Zha
+
+## ❗Quick Understanding <a name="1_"></a> 
+The overview pipeline is shown as follows:
+<p align="center">
+    <img src="./img/overview.gif" width="750"/> <br />
+    <em> 
+    </em>
+</p>
+
+A single image could could be used to infer different 3D object affordance.
+<p align="center">
+    <img src="./img/i_2_p.gif" width="750"/> <br />
+    <em> 
+    </em>
+</p>
+
+Meanwhile, a single point cloud be grounded the same 3D affordance through the same interaction, and different 3D affordances by distinct interactions.
+<p align="center">
+    <img src="./img/p_2_i.gif" width="750"/> <br />
+    <em> 
+    </em>
+</p>
 
 ## 💡 Abstract <a name="2"></a> 
 Grounding 3D object affordance seeks to locate objects' ''action possibilities'' regions in the 3D space, which serves as a link between perception and operation for embodied agents. Existing studies primarily focus on connecting visual affordances with geometry structures, e.g. relying on annotations to declare interactive regions of interest on the object and establishing a mapping between the regions and affordances. However, the essence of learning object affordance is to understand how to use it, and the manner that detaches interactions is limited in generalization. Normally, humans possess the ability to perceive object affordances in the physical world through demonstration images or videos. Motivated by this, we introduce a novel task setting: grounding 3D object affordance from 2D interactions in images, which faces the challenge of anticipating affordance through interactions of different sources. To address this problem, we devise a novel Interaction-driven 3D Affordance Grounding Network (IAG), which aligns the region feature of objects from different sources and models the interactive contexts for 3D object affordance grounding. Besides, we collect a Point-Image Affordance Dataset (PIAD) to support the proposed task. Comprehensive experiments on PIAD demonstrate the reliability of the proposed task and the superiority of our method. The dataset and code will be made available to the public. 
@@ -41,7 +64,7 @@ Grounding 3D object affordance seeks to locate objects' ''action possibilities''
     </em>
 </p>
 
-**Our Interaction-driven 3D Affordance Grounding Network.** it firstly extracts localized features $F_{i}$, $F_{p}$ respectively, then takes the Joint Region Alignment Module to align them and get the joint feature $F_{j}$. Next, Affordance Revealed Module utilizes $F_{j}$ to reveal affordance $F_{\alpha}$ with $F_{s}$, $F_{e}$ by cross-attention. Eventually, $F_{j}$ and $F_{\alpha}$ are sent to the decoder to obtain the final results $\hat{\phi}$ and $\hat{y}$.
+**Our Interaction-driven 3D Affordance Grounding Network.** It firstly extracts localized features $F_{i}$, $F_{p}$ respectively, then takes the Joint Region Alignment Module to align them and get the joint feature $F_{j}$. Next, Affordance Revealed Module utilizes $F_{j}$ to reveal affordance $F_{\alpha}$ with $F_{s}$, $F_{e}$ by cross-attention. Eventually, $F_{j}$ and $F_{\alpha}$ are sent to the decoder to obtain the final results $\hat{\phi}$ and $\hat{y}$.
 
 ## 📂 Dataset <a name="4"></a> 
 <p align="center">
