@@ -19,12 +19,12 @@ PyTorch implementation of Grounding 3D Object Affordance from 2D Interactios in 
  11. [🔍 Citation](#10)
 
 ## 📎 Paper Link <a name="1"></a> 
-* Grounding 3D Object Affordance from 2D Interactions in Images ([link](https://arxiv.org/abs/2106.14747))
+* Grounding 3D Object Affordance from 2D Interactions in Images ([link]())
 > Authors:
 > Yuhang Yang, Wei Zhai, Hongchen Luo, Yang Cao, Jiebo Luo, Zheng-Jun Zha
 
 ## ❗Quick Understanding <a name="1_"></a> 
-The overview pipeline is shown as follows:
+The following demonstration gives a brief introduction to our task.
 <p align="center">
     <img src="./img/overview.gif" width="750"/> <br />
     <em> 
@@ -54,7 +54,7 @@ Grounding 3D object affordance seeks to locate objects' ''action possibilities''
     </em>
 </p>
 
-**Illustration of perceiving affordance.** We propose to ground 3D object affordance through 2D interactions. Inputting an object point cloud with an interactive image, grounding the corresponding affordance on the 3D object.
+**Grounding Affordance from Interactions.** We propose to ground 3D object affordance through 2D interactions. Inputting an object point cloud with an interactive image, grounding the corresponding affordance on the 3D object.
 
 ## 📖 Method <a name="3"></a> 
 ### IAG-Net <a name="31"></a> 
@@ -157,16 +157,16 @@ mitsuba Chair.xml
     </em>
 </p>
 
-**(a)** Same object category. **(b)** Different object categories, similar geometrics. **(c)** Different object categories and geometrics.
+**(a)** Same object category. **(b)** Different object categories, similar geometrics. **(c)** Different object categories and geometrics, in this situation, the model does not make random predictions.
 
-- One point cloud with different images:
+- Multiple Affordances:
 <p align="center">
-    <img src="./img/p2i.png" width="750"/> <br />
+    <img src="./img/Multiplicity.png" width="750"/> <br />
     <em> 
     </em>
 </p>
 
-Grounding affordance on the **same** point cloud with images that contain **similar** or **disparate** interactions
+Some objects like “Bag" contains the region that corresponds to multiple affordances.
 
 - Rotate and partial point cloud:
 <p align="center">
@@ -194,11 +194,13 @@ This project is for research purpose only, please contact us for the licence of 
 ## 🔍 Citation <a name="10"></a> 
 
 ```
-@inproceedings{Oneluo,
-  title={One-Shot Affordance Detection},
-  author={Hongchen Luo and Wei Zhai and Jing Zhang and Yang Cao and Dacheng Tao},
-  booktitle={IJCAI},
-  year={2021}
+@inproceedings{Yang2023Affordance,
+  title={Grounding 3D Object Affordance from 2D Interactions in Images},
+  author={Yang, Yuhang and Zhai, Wei and Luo, Hongchen and Cao, Yang and Luo Jiebo and Zha, Zheng-Jun},
+  year={2023},
+  eprint={},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV}
 }
 ```
 
