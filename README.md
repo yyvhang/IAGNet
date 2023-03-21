@@ -19,7 +19,7 @@ PyTorch implementation of Grounding 3D Object Affordance from 2D Interactios in 
  11. [🔍 Citation](#10)
 
 ## 📎 Paper Link <a name="1"></a> 
-* Grounding 3D Object Affordance from 2D Interactions in Images ([link]())
+* Grounding 3D Object Affordance from 2D Interactions in Images ([link](https://arxiv.org/pdf/2303.10437.pdf))
 > Authors:
 > Yuhang Yang, Wei Zhai, Hongchen Luo, Yang Cao, Jiebo Luo, Zheng-Jun Zha
 
@@ -198,7 +198,7 @@ This project is for research purpose only, please contact us for the licence of 
   title={Grounding 3D Object Affordance from 2D Interactions in Images},
   author={Yang, Yuhang and Zhai, Wei and Luo, Hongchen and Cao, Yang and Luo Jiebo and Zha, Zheng-Jun},
   year={2023},
-  eprint={},
+  eprint={2303.10437},
   archivePrefix={arXiv},
   primaryClass={cs.CV}
 }
