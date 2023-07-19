@@ -18,6 +18,8 @@ PyTorch implementation of Grounding 3D Object Affordance from 2D Interactios in 
  10. [✉️ Statement](#9)
  11. [🔍 Citation](#10)
 
+## News: Our Paper has been accepted by ICCV2023, we will release the pre-trained model soon and the PIAD dataset will be released after the ICCV2023 conference.
+
 ## 📎 Paper Link <a name="1"></a> 
 * Grounding 3D Object Affordance from 2D Interactions in Images ([link](https://arxiv.org/pdf/2303.10437.pdf))
 > Authors:
