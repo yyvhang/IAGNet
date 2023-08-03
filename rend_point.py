@@ -152,6 +152,7 @@ if __name__=='__main__':
     rend_path = 'a txt file which contain all .ply file'
     save_path = 'folder to save the .xml file'
     render_point(rend_path, save_path)
+    #ConvertEXRToJPG(exr_file, jpg_file)
 
 
 

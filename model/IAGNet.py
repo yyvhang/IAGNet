@@ -1,13 +1,10 @@
 
-import numpy
 import torch
-import pdb
 import torch.nn as nn
-import numpy as np
 import torch.nn.functional as F
 from torchvision import models
-from model.pointnet2_utils import PointNetSetAbstractionMsg,PointNetSetAbstraction,PointNetFeaturePropagation
-from torchvision.ops import roi_pool, roi_align
+from model.pointnet2_utils import PointNetSetAbstractionMsg,PointNetFeaturePropagation
+from torchvision.ops import roi_align
 
 class Cross_Attention(nn.Module):
     def __init__(self, emb_dim, proj_dim):
@@ -67,20 +64,15 @@ class Inherent_relation(nn.Module):
         queries = self.query(x).view(batch_size, seq_len, self.num_heads, self.head_dim).transpose(1, 2)    # (batch_size, num_heads, seq_len, head_dim)
         keys = self.key(x).view(batch_size, seq_len, self.num_heads, self.head_dim).transpose(1, 2)         # (batch_size, num_heads, seq_len, head_dim)
         values = self.value(x).view(batch_size, seq_len, self.num_heads, self.head_dim).transpose(1, 2)     # (batch_size, num_heads, seq_len, head_dim)
-        
-        # Compute scaled dot-product attention scores
+
         scores = torch.matmul(queries, keys.transpose(-2, -1)) / (self.hidden_size ** 0.5)                  # (batch_size, num_heads, seq_len, seq_len)
-        
-        # Apply softmax activation to scores
+
         attention_weights = nn.functional.softmax(scores, dim=-1)                                           # (batch_size, num_heads, seq_len, seq_len)
 
-        # Apply attention weights to values
         out = torch.matmul(attention_weights, values)                                                       # (batch_size, num_heads, seq_len, head_dim)
-        
-        # Concatenate and reshape heads
+
         out = out.transpose(1, 2).contiguous().view(batch_size, seq_len, embed_dim)                         # (batch_size, seq_len, embed_dim)
-        
-        # Apply layer normalization
+
         out = self.ln(out + x)
         return out
 
@@ -217,11 +209,8 @@ class Img_Encoder(nn.Module):
 
         out = self.model.maxpool(out) 
         out = self.model.layer1(out)   
-
         down_1 = self.model.layer2(out)         
-
         down_2 = self.model.layer3(down_1)       
-
         down_3 = self.model.layer4(down_2)
 
         return down_3
@@ -295,7 +284,7 @@ class Decoder(nn.Module):
 
 class IAG(nn.Module):
     def __init__(self, img_model_path=None, pre_train = True, normal_channel=False, local_rank=None,
-                N_p = 64, emb_dim = 512, proj_dim = 512, num_heads = 4, N_raw = 2048, num_affordance=17):
+                N_p = 64, emb_dim = 512, proj_dim = 512, num_heads = 4, N_raw = 2048, num_affordance=18):
         class SwapAxes(nn.Module):
             def __init__(self):
                 super().__init__()
@@ -353,7 +342,7 @@ class IAG(nn.Module):
         F_I = self.img_encoder(img)
         ROI_box = self.get_roi_box(B).to(device)
 
-        F_i, F_s, F_e = self.get_mask_feature(img, F_I, sub_box, obj_box, device)     #[B, 512, 7, 7]  
+        F_i, F_s, F_e = self.get_mask_feature(img, F_I, sub_box, obj_box, device)
         F_e = roi_align(F_e, ROI_box, output_size=(4,4))
 
         F_p_wise = self.point_encoder(xyz)

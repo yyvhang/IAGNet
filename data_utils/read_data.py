@@ -8,6 +8,10 @@ import json
 import pickle as pkl
 import pdb
 
+'''
+load raw data from 3D-AffordanceNet dataset
+'''
+
 
 def pc_normalize(pc):
     centroid = np.mean(pc, axis=0)

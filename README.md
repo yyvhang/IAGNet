@@ -10,15 +10,15 @@ PyTorch implementation of Grounding 3D Object Affordance from 2D Interactios in 
  5. [📂 Dataset](#4)
  6. [📃 Requirements](#5)
  7. [✏️ Usage](#6)
-    1. [Train](#61)
-    2. [Evaluate](#62)
-    3. [Inference](#63)
- 8. [📊 Experimental Results](#7)
- 9. [🍎 Potential Applications](#8)
- 10. [✉️ Statement](#9)
- 11. [🔍 Citation](#10)
+    1. [Demo](#61)
+    2. [Train](#62)
+    3. [Evaluate](#63)
+    4. [Render](#64)
+ 8. [🍎 Potential Applications](#8)
+ 9.  [✉️ Statement](#9)
+ 10. [🔍 Citation](#10)
 
-## News: Our Paper has been accepted by ICCV2023, we will release the pre-trained model soon and the PIAD dataset will be released after the ICCV2023 conference.
+## News: Our Paper has been accepted by ICCV2023, we will release the pre-trained model after the camera-ready deadline, and the PIAD dataset will be released after the ICCV2023 conference.
 
 ## 📎 Paper Link <a name="1"></a> 
 * Grounding 3D Object Affordance from 2D Interactions in Images ([link](https://arxiv.org/pdf/2303.10437.pdf))
@@ -70,7 +70,7 @@ Grounding 3D object affordance seeks to locate objects' ''action possibilities''
 
 ## 📂 Dataset <a name="4"></a> 
 <p align="center">
-    <img src="./img/dataset.png" width="750"/> <br />
+    <img src="./img/PIAD.png" width="750"/> <br />
     <em> 
     </em>
 </p>
@@ -86,7 +86,7 @@ Grounding 3D object affordance seeks to locate objects' ''action possibilities''
 **Examples of PIAD.** Some paired images and point clouds in PIAD. The ''yellow'' box in the image is the bounding box of the interactive subject, the ''red'' box is the bounding box of the interactive object.
 
 ```bash  
-We will release our PIAD soon...
+We will release our PIAD after the conference.
 ```
 
 
@@ -109,75 +109,36 @@ git clone https://github.com/yyvhang/IAGNet.git
 ```
 
 ### Download PIAD <a name="41"></a> 
-- We will release the PIAD dataset soon.
+- We will release the PIAD dataset after the conference.
 
-
-
-### Train <a name="61"></a> 
-To train the IAG-Net model, you can modify the training parameter in `config/config_seen.yaml` and then run the following command:
-```bash  
-python train.py --name IAG
-```
-To train the IAG-Net model by DDP, run the `train_DDP.py` as follows:
-```bash  
-python -m torch.distributed.run --nproc_per_node=4 train_DDP.py  --gpu_num 4  --name IAG_DDP  
-```
-`gpu_num, nproc_per_node` is the count of GPU, chose it according to your devices.
-
-### Evaluate <a name="62"></a> 
-To evaluate the trained IAG-Net model, run `evalization.py`:
-```bash  
-python evalization.py
-```
-### Inference <a name="63"></a> 
+### Run a Demo <a name="61"></a> 
 To inference the results with IAG-Net model, run `inference.py` to get the `.ply` file
 ```bash  
-python inference.py --model_path runs/train/IAG/best.pt
+python inference.py --model_path ckpts/IAG_Seen.pt
 ```
 
-To render the `.ply` file, we provide the script `rend_point.py`, run this file to get `.xml` files:
+### Train <a name="62"></a> 
+To train the IAG-Net model, you can modify the training parameter in `config/config_seen.yaml` and then run the following command:
+```bash  
+python train.py --name IAG --yaml config/config_seen.yaml
+```
+
+### Evaluate <a name="63"></a> 
+To evaluate the trained IAG-Net model, run `evalization.py`:
+```bash  
+python evalization.py --model_path ckpts/IAG_Seen.pt --yaml config/config_seen.yaml
+```
+
+### Render the result <a name="64"></a> 
+To render the `.ply` file, we provide the script `rend_point.py`, please read this script carefully. Put all `.ply` file path in one `.txt` file and run this command to get `.xml` files:
 ```bash  
 python rend_point.py
 ```
-Once you get the `.xml` file, just rend it with `mitsuba`:
+Once you get the `.xml` files, just rend them with `mitsuba`, you will get `.exr` results.:
 ```bash  
 mitsuba Chair.xml
 ```
-
-## 📊 Experimental Results <a name="7"></a> 
-- Visual results of comparison in both partitions:
-<p align="center">
-    <img src="./img/visual_compare.png" width="800"/> <br />
-    <em> 
-    </em>
-</p>
-
-- One image with multiple point clouds:
-<p align="center">
-    <img src="./img/i2p.png" width="750"/> <br />
-    <em> 
-    </em>
-</p>
-
-**(a)** Same object category. **(b)** Different object categories, similar geometrics. **(c)** Different object categories and geometrics, in this situation, the model does not make random predictions.
-
-- Multiple Affordances:
-<p align="center">
-    <img src="./img/Multiplicity.png" width="750"/> <br />
-    <em> 
-    </em>
-</p>
-
-Some objects like “Bag" contains the region that corresponds to multiple affordances.
-
-- Rotate and partial point cloud:
-<p align="center">
-    <img src="./img/rotate.png" width="750"/> <br />
-    <em> 
-    </em>
-</p>
-
-Results on the **rotate** and **partial** point clouds.
+If your device could not visualize `.exr` file, you can use function `ConvertEXRToJPG` in `rend_point.py` to covert it to `.jpg` file.
 
 
 ## 🍎 Potential Applications <a name="8"></a> 

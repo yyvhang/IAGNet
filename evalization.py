@@ -1,10 +1,9 @@
-from re import A
 import torch
-from sklearn.metrics import average_precision_score, f1_score, roc_auc_score
+from sklearn.metrics import roc_auc_score
 from torch.utils.data import DataLoader
 from data_utils.dataset_PIAD import PIAD
 from model.IAGNet import get_IAGNet
-from utils.eval import evaluating, SIM
+from utils.eval import SIM
 from numpy import nan
 import numpy as np
 import pdb
@@ -12,6 +11,7 @@ import random
 import os
 import pandas as pd
 import yaml
+import argparse
 
 def Evalization(dataset, data_loader, model_path, use_gpu, Seeting):
     if use_gpu:
@@ -19,10 +19,7 @@ def Evalization(dataset, data_loader, model_path, use_gpu, Seeting):
     else:
         device = torch.device("cpu")
 
-    if(Seeting == 'Unseen_2'):
-        object_list = ['Bottle', 'Bowl', 'Bed', 'Bag', 'Display', 'Dishwasher','Knife','Microwave','Mug','Scissors','Vase']
-        Affordance_list = ['contain', 'lay', 'pour', 'wrapgrasp','open','display','stab','grasp']
-    elif(Seeting == 'Unseen'):
+    if(Seeting == 'Unseen'):
         object_list = ['Bed', 'Dishwasher','Microwave','Scissors','Vase', 'Laptop']
         Affordance_list = ['contain', 'lay', 'sit', 'wrapgrasp','open','display','stab','grasp', 'press','cut']
     else:
@@ -190,19 +187,28 @@ def read_yaml(path):
 
     return dict
 
-if __name__=='__main__':
+def run(opt):
 
-    dict = read_yaml('config/config_seen.yaml')
+    dict = read_yaml(opt.yaml)
     point_path = dict['point_test']
     img_path = dict['img_test']
     box_path = dict['box_test']
 
-    model_path = 'runs/train/IAG/best.pt'
+    model_path = opt.checkpoint_path
 
     val_dataset = PIAD('val', dict['Setting'], point_path, img_path, box_path)
     val_loader = DataLoader(val_dataset, dict['batch_size'], num_workers=8, shuffle=True)
+    Evalization(val_dataset, val_loader, model_path, opt.use_gpu, Seeting=dict['Setting'])
 
-    use_gpu = True
+if __name__=='__main__':
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--gpu', type=str, default='cuda:0', help='gpu device id')
+    parser.add_argument('--use_gpu', type=str, default=True, help='whether or not use gpus')
+    parser.add_argument('--checkpoint_path', type=str, default='ckpt/IAG_Seen.pt', help='checkpoint path')
+    parser.add_argument('--yaml', type=str, default='config/config_seen.yaml', help='yaml path')
+
+    opt = parser.parse_args()
     seed_torch(42)
-
-    Evalization(val_dataset, val_loader, model_path, use_gpu, Seeting=dict['Setting'])
+    run(opt)

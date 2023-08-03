@@ -1,15 +1,12 @@
 import argparse
-from ast import parse
-from pickle import TRUE
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from model.IAGNet import get_IAGNet
 from utils.loss import HM_Loss, kl_div
-from utils.eval import evaluating, KLD, SIM
+from utils.eval import evaluating, SIM
 from data_utils.dataset_PIAD import PIAD
-from sklearn.metrics import average_precision_score, f1_score, roc_auc_score
-import torch.nn.functional as F
+from sklearn.metrics import roc_auc_score
 import numpy as np
 import os
 import pdb
@@ -136,7 +133,7 @@ def main(opt, dict):
         log_string(f'Epoch:{epoch} | mean_loss:{mean_loss}')
 
         if(opt.storage == True):
-            if((epoch+1) % 2==0):
+            if((epoch+1) % 1==0):
                 model_path = save_path + '/Epoch_' + str(epoch+1) + '.pt'
                 checkpoint = {
                     'model': model.state_dict(),
@@ -156,6 +153,7 @@ def main(opt, dict):
             with torch.no_grad():
                 log_string(f'EVALUATION strat-------')
                 num_batches = len(val_loader)
+                val_loss_sum = 0
                 total_MAE = 0
                 total_point = 0
                 model = model.eval()
@@ -172,15 +170,23 @@ def main(opt, dict):
                     
                     _3d, logits, to_KL = model(img, point, sub_box, obj_box)
 
+                    val_loss_hm = criterion_hm(_3d, label)
+                    val_loss_kl = kl_div(to_KL[0], to_KL[1])
+                    val_loss = val_loss_hm + opt.loss_kl*val_loss_kl
+
+
                     mae, point_nums = evaluating(_3d, label)
                     total_point += point_nums
+                    val_loss_sum += val_loss.item()
                     total_MAE += mae.item()
                     pred_num = _3d.shape[0]
-
+                    print(f'---val_loss | {val_loss.item()}')
                     results[num : num+pred_num, :, :] = _3d
                     targets[num : num+pred_num, :, :] = label
                     num += pred_num
 
+                val_mean_loss = val_loss_sum / num_batches
+                log_string(f'Epoch_{epoch} | val_loss | {val_mean_loss}')
                 mean_mae = total_MAE / total_point
                 results = results.detach().numpy()
                 targets = targets.detach().numpy()
@@ -256,13 +262,14 @@ if __name__=='__main__':
     parser.add_argument('--name', type=str, default='IAG', help='training name to classify each training process')
     parser.add_argument('--resume', type=str, default=False, help='start training from previous epoch')
     parser.add_argument('--checkpoint_path', type=str, default='runs/train/IAG/best.pt', help='checkpoint path')
-    parser.add_argument('--log_name', type=str, default='train.log', help='the name of current training log')
+    parser.add_argument('--log_name', type=str, default='train.log', help='the name of current training')
     parser.add_argument('--loss_cls', type=float, default=0.3, help='cls loss scale')
     parser.add_argument('--loss_kl', type=float, default=0.5, help='kl loss scale')
     parser.add_argument('--storage', type=bool, default=False, help='whether to storage the model during training')
+    parser.add_argument('--yaml', type=str, default='config/config_seen.yaml', help='yaml path')
 
     opt = parser.parse_args()
     seed_torch(seed=42)
     torch.autograd.set_detect_anomaly(True)
-    dict = read_yaml('config/config_seen.yaml')
+    dict = read_yaml(opt.yaml)
     main(opt, dict)

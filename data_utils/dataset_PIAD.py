@@ -44,47 +44,40 @@ class PIAD(Dataset):
         self.i_path = img_path
         self.b_path = box_path
         self.pair_num = pair
-        self.point_files = self.read_file(self.p_path)
-        self.img_files = self.read_file(self.i_path)
-        self.box_files = self.read_file(self.b_path)
-
         self.affordance_label_list = ['grasp', 'contain', 'lift', 'open', 
                         'lay', 'sit', 'support', 'wrapgrasp', 'pour', 'move', 'display',
-                        'push', 'pull', 'listen', 'wear', 'press', 'cut', 'stab']
+                        'push', 'listen', 'wear', 'press', 'cut', 'stab']
         '''
         Unseen
         '''
         if setting_type == 'Unseen':
-            self.object_list = ['Knife', 'Refrigerator', 'Earphone', 
-            'Bag', 'Keyboard', 'Chair', 'Hat', 'Door', 'TrashCan', 'Table', 
-            'Faucet', 'StorageFurniture', 'Bottle', 'Bowl', 'Display', 'Mug', 'Clock']
-            self.object_train_split = [[0, 272], [272, 430], [430, 622], 
-            [622, 725], [725, 860], [860, 2411], [2411, 2602], [2602, 2735], [2735, 2984], 
-            [2984, 4041], [4041, 4299], [4299, 4681], [4681, 5030], [5030, 5190], [5190, 5495], [5495, 5682], [5682, 5896]]
-        '''
-        Unseen_2
-        '''
-        if setting_type == 'Unseen_2':
-            self.object_list = ['Vase', 'Bed', 'Microwave', 'Door', 'Earphone', 'Bottle', 'Bowl', 'Laptop', 
-            'Clock', 'Scissors', 'Mug', 'Faucet', 'StorageFurniture', 'Bag', 'Chair', 'Dishwasher', 
-            'Refrigerator', 'Table', 'Hat', 'Keyboard', 'Knife', 'TrashCan', 'Display']
-            self.object_train_split = [[0, 83], [83, 125], [125, 202], [202, 332], [332,511], [511,708],
-            [708,792], [792,1129], [1129,1386], [1386,1425], [1425,1512], [1512,1756], [1756, 2132], [2132, 2204],
-            [2204, 3204], [3204, 3274], [3274, 3422], [3422,4422], [4422,4600],[4600,4725],[4725,4936],[4936,5188]]
-        
+            number_dict = {'Knife': 0, 'Refrigerator': 0, 'Earphone': 0, 
+            'Bag': 0, 'Keyboard': 0, 'Chair': 0, 'Hat': 0, 'Door': 0, 'TrashCan': 0, 'Table': 0, 
+            'Faucet': 0, 'StorageFurniture': 0, 'Bottle': 0, 'Bowl': 0, 'Display': 0, 'Mug': 0, 'Clock': 0}
+
         '''
         Seen
         '''
         if setting_type == 'Seen':
-            self.object_list = ['Vase', 'Display', 'Bed', 'Microwave', 'Door', 'Earphone', 'Bottle', 'Bowl', 'Laptop', 
-            'Clock', 'Scissors', 'Mug', 'Faucet', 'StorageFurniture', 'Bag', 'Chair', 'Dishwasher', 
-            'Refrigerator', 'Table', 'Hat', 'Keyboard', 'Knife', 'TrashCan']
-            self.object_train_split = [[0, 209], [209, 462], [462, 589], [589, 719], [719, 827], [827, 984],
-            [984, 1272], [1272, 1404], [1404, 1699], [1699,1904], [1904,1953], [1953,2105], [2105, 2315], [2315, 2644],
-            [2644, 2732], [2732, 4084], [4084, 4201], [4201, 4331], [4331,5288],[5288,5444],[5444,5554],[5554,5779],[5779,6000]]
-        
+            number_dict = {'Earphone': 0, 'Bag': 0, 'Chair': 0, 'Refrigerator': 0, 'Knife': 0, 'Dishwasher': 0, 'Keyboard': 0, 'Scissors': 0, 'Table': 0, 
+            'StorageFurniture': 0, 'Bottle': 0, 'Bowl': 0, 'Microwave': 0, 'Display': 0, 'TrashCan': 0, 'Hat': 0, 'Clock': 0, 
+            'Door': 0, 'Mug': 0, 'Faucet': 0, 'Vase': 0, 'Laptop': 0, 'Bed': 0}
+
+        self.img_files = self.read_file(self.i_path)
+        self.box_files = self.read_file(self.b_path)
         self.img_size = img_size
 
+        if self.run_type == 'train':
+            self.point_files, self.number_dict = self.read_file(self.p_path, number_dict)
+            self.object_list = list(number_dict.keys())
+            self.object_train_split = {}
+            start_index = 0
+            for obj_ in self.object_list:
+                temp_split = [start_index, start_index + self.number_dict[obj_]]
+                self.object_train_split[obj_] = temp_split
+                start_index += self.number_dict[obj_]
+        else:
+            self.point_files = self.read_file(self.p_path)
 
     def __len__(self):
         return len(self.img_files)
@@ -98,12 +91,8 @@ class PIAD(Dataset):
             point_path = self.point_files[index]
         else:
             object_name = img_path.split('_')[-3]
-            obj_index = self.object_list.index(object_name)
-            idx = self.object_list.index(object_name)
-            range_ = self.object_train_split[idx]
+            range_ = self.object_train_split[object_name]
             point_sample_idx = random.sample(range(range_[0],range_[1]), self.pair_num)
-            point_path_1 = self.point_files[point_sample_idx[0]]
-            point_path_2 = self.point_files[point_sample_idx[1]]
 
         Img = Image.open(img_path).convert('RGB')
 
@@ -145,16 +134,22 @@ class PIAD(Dataset):
         else:
             return Img, Point, affordance_label, img_path, point_path, sub_box, obj_box
 
-    def read_file(self, path):
+    def read_file(self, path, number_dict=None):
         file_list = []
         with open(path,'r') as f:
             files = f.readlines()
             for file in files:
                 file = file.strip('\n')
+                if number_dict != None:
+                    object_ = file.split('_')[-2]
+                    number_dict[object_] +=1
                 file_list.append(file)
 
             f.close()
-        return file_list
+        if number_dict != None:
+            return file_list, number_dict
+        else:
+            return file_list
     
     def extract_point_file(self, path):
         with open(path,'r') as f:
