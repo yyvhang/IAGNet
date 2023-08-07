@@ -1,29 +1,25 @@
-# Grounding 3D Object Affordance from 2D Interactions in Images
-
-PyTorch implementation of Grounding 3D Object Affordance from 2D Interactios in Images. This repository contains PyTorch training and evaluation code, the dataset will coming soon.
+[![Website Badge](https://raw.githubusercontent.com/referit3d/referit3d/eccv/images/project_website_badge.svg)](https://yyvhang.github.io/publications/IAG/index.html)
+[![arXiv](https://img.shields.io/badge/arXiv-2303.10437-b31b1b.svg?style=plastic)](https://arxiv.org/abs/2303.10437)
+# Grounding 3D Object Affordance from 2D Interactions in Images (ICCV 2023)
+PyTorch implementation of Grounding 3D Object Affordance from 2D Interactios in Images. This repository contains PyTorch training, evaluation, inference code, the pretrained model and the PIAD dataset.
 
 ## 📋 Table of content
- 1. [📎 Paper Link](#1)
- 2. [❗ Quick Understanding](#1_)
- 3. [💡 Abstract](#2)
- 4. [📖 Method](#3)
- 5. [📂 Dataset](#4)
- 6. [📃 Requirements](#5)
- 7. [✏️ Usage](#6)
+ 1. [❗ Quick Understanding](#1_)
+ 2. [💡 Abstract](#2)
+ 3. [📖 Method](#3)
+ 4. [📂 Dataset](#4)
+ 5. [📃 Requirements](#5)
+ 6. [✏️ Usage](#6)
     1. [Demo](#61)
     2. [Train](#62)
     3. [Evaluate](#63)
     4. [Render](#64)
- 8. [🍎 Potential Applications](#8)
- 9.  [✉️ Statement](#9)
- 10. [🔍 Citation](#10)
+ 7. [🍎 Potential Applications](#8)
+ 8.  [✉️ Statement](#9)
+ 9.  [🔍 Citation](#10)
 
 ## News: Our Paper has been accepted by ICCV2023, we will release the pre-trained model after the camera-ready deadline, and the PIAD dataset will be released after the ICCV2023 conference.
 
-## 📎 Paper Link <a name="1"></a> 
-* Grounding 3D Object Affordance from 2D Interactions in Images ([link](https://arxiv.org/pdf/2303.10437.pdf))
-> Authors:
-> Yuhang Yang, Wei Zhai, Hongchen Luo, Yang Cao, Jiebo Luo, Zheng-Jun Zha
 
 ## ❗Quick Understanding <a name="1_"></a> 
 The following demonstration gives a brief introduction to our task.
