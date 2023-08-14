@@ -105,7 +105,7 @@ git clone https://github.com/yyvhang/IAGNet.git
 ```
 
 ### Download PIAD and the model checkpoint <a name="41"></a>
-- The pretrained model could download at [Google Drive](https://drive.google.com/drive/folders/1X768E6Oy4fBvMlsjV3WjJsq7yppX5mIh?usp=sharing) 
+- The pretrained model could download at [Google Drive](https://drive.google.com/drive/folders/1X768E6Oy4fBvMlsjV3WjJsq7yppX5mIh?usp=sharing), put the `.pt` file in the `ckpts\` folder
 - We will release the PIAD dataset after the conference.
 
 ### Run a Demo <a name="61"></a> 
