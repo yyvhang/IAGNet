@@ -122,9 +122,9 @@ def inference_single(img_path, box_path, GT_path, model_path, results_folder):
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_path', type=str, default='ckpts/IAG_Seen.pt', help='model path')
-    parser.add_argument('--img_path', type=str, default='Demo/test.jpg', help='test img path')
-    parser.add_argument('--point_path', type=str, default='Demo/test.txt', help='test point path')
-    parser.add_argument('--box_path', type=str, default='Demo/test.json', help='test point path')
+    parser.add_argument('--img_path', type=str, default='Demo/Img_Test_Bag_lift_1.jpg', help='test img path')
+    parser.add_argument('--point_path', type=str, default='Demo/Point_Test_Bag_1.txt', help='test point path')
+    parser.add_argument('--box_path', type=str, default='Demo/Img_Test_Bag_lift_1.json', help='test point path')
     parser.add_argument('--results_path', type=str, default='Demo/', help='save Demo path')
 
     opt = parser.parse_args()

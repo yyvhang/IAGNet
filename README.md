@@ -18,7 +18,7 @@ PyTorch implementation of Grounding 3D Object Affordance from 2D Interactios in 
  8.  [✉️ Statement](#9)
  9.  [🔍 Citation](#10)
 
-## News: Our Paper has been accepted by ICCV2023, we will release the pre-trained model after the camera-ready deadline, and the PIAD dataset will be released after the ICCV2023 conference.
+## News: Our Paper has been accepted by ICCV2023, and the PIAD dataset will be released after the ICCV2023 conference.
 
 
 ## ❗Quick Understanding <a name="1_"></a> 
@@ -104,7 +104,8 @@ We will release our PIAD after the conference.
 git clone https://github.com/yyvhang/IAGNet.git
 ```
 
-### Download PIAD <a name="41"></a> 
+### Download PIAD and the model checkpoint <a name="41"></a>
+- The pretrained model could be downloaded at [Google Drive](https://drive.google.com/drive/folders/1X768E6Oy4fBvMlsjV3WjJsq7yppX5mIh?usp=sharing) 
 - We will release the PIAD dataset after the conference.
 
 ### Run a Demo <a name="61"></a> 
