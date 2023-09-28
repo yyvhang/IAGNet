@@ -18,7 +18,7 @@ PyTorch implementation of Grounding 3D Object Affordance from 2D Interactios in 
  8.  [✉️ Statement](#9)
  9.  [🔍 Citation](#10)
 
-## News: Our Paper has been accepted by ICCV2023, and the PIAD dataset will be released after the ICCV2023 conference.
+## News: Our Paper has been accepted by ICCV2023.
 
 
 ## ❗Quick Understanding <a name="1_"></a> 
@@ -154,13 +154,13 @@ This project is for research purpose only, please contact us for the licence of 
 ## 🔍 Citation <a name="10"></a> 
 
 ```
-@inproceedings{Yang2023Affordance,
-  title={Grounding 3D Object Affordance from 2D Interactions in Images},
-  author={Yang, Yuhang and Zhai, Wei and Luo, Hongchen and Cao, Yang and Luo Jiebo and Zha, Zheng-Jun},
-  year={2023},
-  eprint={2303.10437},
-  archivePrefix={arXiv},
-  primaryClass={cs.CV}
+@InProceedings{Yang_2023_ICCV,
+    author    = {Yang, Yuhang and Zhai, Wei and Luo, Hongchen and Cao, Yang and Luo, Jiebo and Zha, Zheng-Jun},
+    title     = {Grounding 3D Object Affordance from 2D Interactions in Images},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2023},
+    pages     = {10905-10915}
 }
 ```
 
