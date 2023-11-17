@@ -81,10 +81,6 @@ Grounding 3D object affordance seeks to locate objects' ''action possibilities''
 
 **Examples of PIAD.** Some paired images and point clouds in PIAD. The ''yellow'' box in the image is the bounding box of the interactive subject, the ''red'' box is the bounding box of the interactive object.
 
-```bash  
-We will release our PIAD after the conference.
-```
-
 
 ## 📃 Requirements <a name="5"></a> 
   - python-3.9 
@@ -106,7 +102,7 @@ git clone https://github.com/yyvhang/IAGNet.git
 
 ### Download PIAD and the model checkpoint <a name="41"></a>
 - The pretrained model could download at [Google Drive](https://drive.google.com/drive/folders/1X768E6Oy4fBvMlsjV3WjJsq7yppX5mIh?usp=sharing), put the `.pt` file in the `ckpts\` folder
-- We will release the PIAD dataset after the conference.
+- The PIAD could download at [Google Drive](https://drive.google.com/drive/folders/1F242TsdXjRZkKQotiBsiN2u6rJAGRZ2W?usp=sharing).
 
 ### Run a Demo <a name="61"></a> 
 To inference the results with IAG-Net model, run `inference.py` to get the `.ply` file
